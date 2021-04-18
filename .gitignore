@@ -133,3 +133,6 @@ Data/
 
 # IDE
 .vscode/
+
+# Tensorlogs
+Logdir/
