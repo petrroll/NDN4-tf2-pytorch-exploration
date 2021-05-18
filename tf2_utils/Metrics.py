@@ -33,21 +33,21 @@ class PearsonR(Metric):
             )
 
         self.multioutput = multioutput
-        self.xy = self.add_weight(
-            name="xy", shape=y_shape, initializer="zeros", dtype=dtype
+        self.sum_xy = self.add_weight(
+            name="sum_xy", shape=y_shape, initializer="zeros", dtype=dtype
         )
 
-        self.squared_x = self.add_weight(
-            name="squared_x", shape=y_shape, initializer="zeros", dtype=dtype
+        self.sum_squared_x = self.add_weight(
+            name="sum_squared_x", shape=y_shape, initializer="zeros", dtype=dtype
         )
-        self.squared_y = self.add_weight(
-            name="squared_y", shape=y_shape, initializer="zeros", dtype=dtype
+        self.sum_squared_y = self.add_weight(
+            name="sum_squared_y", shape=y_shape, initializer="zeros", dtype=dtype
         )
-        self.x = self.add_weight(
-            name="x", shape=y_shape, initializer="zeros", dtype=dtype
+        self.sum_x = self.add_weight(
+            name="sum_x", shape=y_shape, initializer="zeros", dtype=dtype
         )
-        self.y = self.add_weight(
-            name="y", shape=y_shape, initializer="zeros", dtype=dtype
+        self.sum_y = self.add_weight(
+            name="sum_y", shape=y_shape, initializer="zeros", dtype=dtype
         )
 
 
@@ -69,20 +69,20 @@ class PearsonR(Metric):
         weighted_y_true = y_true * sample_weight
 
         xy = tf.math.multiply(weighted_y_true, y_pred)
-        self.xy.assign_add(tf.reduce_sum(xy, axis=0))
+        self.sum_xy.assign_add(tf.reduce_sum(xy, axis=0))
 
-        self.squared_x.assign_add(tf.reduce_sum(weighted_y_true ** 2, axis=0))
-        self.squared_y.assign_add(tf.reduce_sum(y_pred ** 2, axis=0))
-        self.x.assign_add(tf.reduce_sum(weighted_y_true, axis=0))
-        self.y.assign_add(tf.reduce_sum(y_pred, axis=0))
+        self.sum_squared_x.assign_add(tf.reduce_sum(weighted_y_true ** 2, axis=0))
+        self.sum_squared_y.assign_add(tf.reduce_sum(y_pred ** 2, axis=0))
+        self.sum_x.assign_add(tf.reduce_sum(weighted_y_true, axis=0))
+        self.sum_y.assign_add(tf.reduce_sum(y_pred, axis=0))
 
         self.count.assign_add(tf.reduce_sum(sample_weight, axis=0))
 
     def result(self):
         raw_scores = tf.math.divide(
-            self.xy - tf.math.multiply(self.count, (self.x/self.count)*(self.y/self.count))
+            self.sum_xy - (self.sum_x * self.sum_y / self.count)
             ,
-            tf.sqrt(self.squared_x - self.count*((self.x/self.count)**2)) * tf.sqrt(self.squared_y - self.count*((self.y/self.count)**2))
+            tf.sqrt(self.sum_squared_x - ((self.sum_x**2) / self.count)) * tf.sqrt(self.sum_squared_y - ((self.sum_y**2)/self.count))
         )
         
 
