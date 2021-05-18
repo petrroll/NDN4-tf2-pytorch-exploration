@@ -1,8 +1,13 @@
 """Implements Pearson's correlation."""
+from typing import Tuple
+
 import tensorflow as tf
 from tensorflow.keras import backend as K
 from tensorflow.keras.metrics import Metric
 from tensorflow.python.ops import weights_broadcast_ops
+
+from typeguard import typechecked
+from tensorflow_addons.utils.types import AcceptableDTypes
 
 VALID_MULTIOUTPUT = {"raw_values", "uniform_average"}
 
@@ -13,12 +18,13 @@ class PearsonR(Metric):
 
     https://en.wikipedia.org/wiki/Pearson_correlation_coefficient
     """
-
+    
+    @typechecked
     def __init__(
         self,
-        name = "pearson_r",
-        dtype = None,
-        y_shape = (),
+        name: str = "pearson_r",
+        dtype: AcceptableDTypes = None,
+        y_shape: Tuple[int, ...] = (),
         multioutput: str = "uniform_average",
         **kwargs,
     ):
@@ -78,7 +84,7 @@ class PearsonR(Metric):
 
         self.count.assign_add(tf.reduce_sum(sample_weight, axis=0))
 
-    def result(self):
+    def result(self) -> tf.Tensor:
         raw_scores = tf.math.divide(
             self.sum_xy - (self.sum_x * self.sum_y / self.count)
             ,
@@ -96,6 +102,6 @@ class PearsonR(Metric):
             )
         )
 
-    def reset_states(self):
+    def reset_states(self) -> None:
         # The state of the metric will be reset at the start of each epoch.
         K.batch_set_value([(v, tf.zeros_like(v)) for v in self.variables])

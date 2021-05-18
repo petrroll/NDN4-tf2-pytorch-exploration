@@ -1,9 +1,18 @@
 import tensorflow as tf 
 
+from typeguard import typechecked
+from tensorflow_addons.utils.types import AcceptableDTypes
+
+from typing import Tuple
+
 @tf.keras.utils.register_keras_serializable(package='Custom', name='laplacian2D')
 class Laplacian2DRegulizer(tf.keras.regularizers.Regularizer):
     
-    def __init__(self, alpha = 0.01, shape=(-1,)):
+    def __init__(
+        self, 
+        alpha: float = 0.01,
+        dtype: AcceptableDTypes = None,
+        shape: Tuple[int, ...] = (-1,)):
         """Create new Laplacian2DRegulizer using Discrete Laplace operator and conv2d operation. 
 
         Currently only supports being applied to Dense layer i.e. [input, output]-shaped weights.
@@ -15,7 +24,7 @@ class Laplacian2DRegulizer(tf.keras.regularizers.Regularizer):
         self.alpha = alpha
         self.shape = shape
 
-        laplacian_kernel = tf.constant([[0., -1., 0.], [-1., 4., -1.], [0., -1., 0.]])
+        laplacian_kernel = tf.constant([[0., -1., 0.], [-1., 4., -1.], [0., -1., 0.]], dtype=dtype)
         laplacian_kernel = laplacian_kernel[:, :, tf.newaxis, tf.newaxis]
         self.__laplacian_kernel = laplacian_kernel 
 

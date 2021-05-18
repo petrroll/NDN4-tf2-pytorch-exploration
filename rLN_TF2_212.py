@@ -43,7 +43,7 @@ model.add(tf.keras.Input(shape=input_shape))
 model.add(tf.keras.layers.Dense(
     int(output_size), 
     "softplus", 
-    kernel_regularizer=tfuR.Laplacian2DRegulizer(0.001, (31, 31))
+    kernel_regularizer=tfuR.Laplacian2DRegulizer(0.001, shape=(31, 31))
     ))
 
 model.compile(
