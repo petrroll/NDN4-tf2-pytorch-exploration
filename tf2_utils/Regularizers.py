@@ -12,7 +12,8 @@ class Laplacian2DRegulizer(tf.keras.regularizers.Regularizer):
         self, 
         alpha: float = 0.01,
         dtype: AcceptableDTypes = None,
-        shape: Tuple[int, ...] = (-1,)):
+        shape: Tuple[int, ...] = (-1,)
+    ):
         """Create new Laplacian2DRegulizer using Discrete Laplace operator and conv2d operation. 
 
         Currently only supports being applied to Dense layer i.e. [input, output]-shaped weights.
