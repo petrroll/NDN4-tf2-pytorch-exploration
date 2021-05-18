@@ -6,7 +6,7 @@ from tensorflow.python.ops import weights_broadcast_ops
 
 VALID_MULTIOUTPUT = {"raw_values", "uniform_average"}
 
-# @tf.keras.utils.register_keras_serializable(package='Custom', name='pearson_r')
+@tf.keras.utils.register_keras_serializable(package='Custom', name='pearson_r')
 class PearsonR(Metric):
     """Computes Pearson's R.
     Probably quite numerically unstable implmementation.

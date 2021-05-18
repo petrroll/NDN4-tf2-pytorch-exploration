@@ -1,6 +1,6 @@
 import tensorflow as tf 
 
-# @tf.keras.utils.register_keras_serializable(package='Custom', name='laplacian2D')
+@tf.keras.utils.register_keras_serializable(package='Custom', name='laplacian2D')
 class Laplacian2DRegulizer(tf.keras.regularizers.Regularizer):
     
     def __init__(self, alpha = 0.01, shape=(-1,)):
