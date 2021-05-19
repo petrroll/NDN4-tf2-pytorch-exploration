@@ -31,14 +31,21 @@ class Laplacian2DRegulizer(tf.keras.regularizers.Regularizer):
 
 
     def __call__(self, x):
-        if len(x.shape) == 2:
+        if len(x.shape) == 2:   # Flattened 2D input
+            # [input, output] -input==H*W> [-1, H, W, output]
             _, dim_out = x.shape        # x: dims [input, output]
+
+            x = tf.expand_dims(x, 0)    # add batch dim
+            x = tf.expand_dims(x, -1)   # add input channels dim
+            x = tf.reshape(x, (-1,) + self.shape + (dim_out,))  # reshape 1D dense weights to 2D
+
+        elif len(x.shape) == 4: # Conv2D filter
+            # [filter_height, filter_width, in_channels, out_channels] -> [I, H, W, output]
+            _, _, _, dim_out = x.shape
+            x = tf.transpose(x, [2, 0, 1, 3])
         else:
             raise NotImplementedError("Currently supports only regularizing layers with [input, output] shape.")
 
-        x = tf.expand_dims(x, 0)    # add batch dim
-        x = tf.expand_dims(x, -1)   # add input channels dim
-        x = tf.reshape(x, (-1,) + self.shape + (dim_out,))  # reshape 1D dense weights to 2D
 
         # Broadcast Laplac operator kernel for each layer's output channel
         laplacian_kernel = tf.broadcast_to(self.__laplacian_kernel, (3, 3, dim_out, 1))
