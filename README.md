@@ -6,7 +6,7 @@ So far only a personal playground without _any_ goals.
 ## Ideas to explore (no particular order): 
 - [x] Laplacian2D regularization
 - [x] Pearson's R metric 
-- [x] Non-DoG models (rLN, rLNLN) from msc-neuro
+- [x] Non-DoG models (rLN, rLNLN, conv) from msc-neuro
 - [x] Rudimentary performance
 - [ ] DoG layer
 - [ ] Reimplementation of baseline 4 from msc-neuro
