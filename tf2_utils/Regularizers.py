@@ -24,6 +24,7 @@ class Laplacian2DRegulizer(tf.keras.regularizers.Regularizer):
         """        
         self.alpha = alpha
         self.shape = shape
+        self.dtype = dtype
 
         laplacian_kernel = tf.constant([[0., -1., 0.], [-1., 4., -1.], [0., -1., 0.]], dtype=dtype)
         laplacian_kernel = laplacian_kernel[:, :, tf.newaxis, tf.newaxis]
