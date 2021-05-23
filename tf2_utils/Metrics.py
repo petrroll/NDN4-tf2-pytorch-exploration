@@ -88,7 +88,7 @@ class PearsonR(Metric):
         raw_scores = tf.math.divide(
             self.sum_xy - (self.sum_x * self.sum_y / self.count)
             ,
-            tf.sqrt(self.sum_squared_x - ((self.sum_x**2) / self.count)) * tf.sqrt(self.sum_squared_y - ((self.sum_y**2)/self.count))
+            tf.keras.backend.epsilon() + tf.sqrt(self.sum_squared_x - ((self.sum_x**2) / self.count)) * tf.sqrt(self.sum_squared_y - ((self.sum_y**2)/self.count))
         )
         
 
