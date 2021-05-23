@@ -1,7 +1,7 @@
 from typing import Optional
 import tensorflow as tf
 
-
+@tf.keras.utils.register_keras_serializable(package='Custom', name='min_max')
 class MinMax(tf.keras.constraints.Constraint):
   """Constrains tensors to have individual-values between min and max."""
 

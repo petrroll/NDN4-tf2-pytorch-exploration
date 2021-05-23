@@ -1,4 +1,4 @@
-import tensorflow as tf 
+import tensorflow as tf
 
 from typeguard import typechecked
 from tensorflow_addons.utils.types import AcceptableDTypes
@@ -58,5 +58,9 @@ class Laplacian2DRegulizer(tf.keras.regularizers.Regularizer):
         return self.alpha * tf.math.reduce_sum(conv_result)
 
     def get_config(self):
-        return {'alpha': float(self.alpha)}
+        return {
+            'alpha': self.alpha,
+            'dtype': self.dtype,
+            'shape': self.shape,
+            }
 
