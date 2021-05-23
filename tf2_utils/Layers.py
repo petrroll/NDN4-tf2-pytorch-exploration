@@ -40,6 +40,7 @@ class DiffOfGaussians(tf.keras.layers.Layer):
         return gauss_1 - gauss_2
 
     def _add_DoG_param(self, name: str, min: float, max: float, max_constrain: bool = True):
+        # In contrast to msc-neuro's implementation -> maintains constraints even when updating weights not only when reading them.  
         return self.add_weight(
             name=name,
             shape=(1, 1, self.units, ),
