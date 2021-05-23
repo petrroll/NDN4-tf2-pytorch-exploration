@@ -7,9 +7,11 @@ So far only a personal playground without _any_ goals.
 - [x] Laplacian2D regularization
 - [x] Pearson's R metric 
 - [x] Non-DoG models (rLN, rLNLN, conv) from msc-neuro
-- [x] Rudimentary performance
-- [ ] DoG layer
-- [ ] Reimplementation of baseline 4 from msc-neuro
+- [x] Rudimentary performance evaluation
+  - Seems to be ~fast/slow for msc-neuro-like models
+- [x] DoG layer
+- [x] Reimplementation of baseline 4 from msc-neuro
+  - [ ] Match loss computation 100 %
 - [ ] NDN3's data filters
 - [ ] Consider cleaning up tools ^^ and packaging them
 
