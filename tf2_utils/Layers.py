@@ -19,20 +19,15 @@ class DiffOfGaussians(tf.keras.layers.Layer):
         return (alpha) * (tf.exp(-((X - ux) ** 2 + (Y - uy) ** 2) / 2 / sigma) / (2*sigma*np.pi))   # implementation is slightly different than paper (not sigma^2)
 
     def _get_DoG(self):
-        W = np.array(range(self.width))
-        H = np.array(range(self.height))
 
-        X, Y = np.meshgrid(W, H)
-        X = tf.constant(np.expand_dims(X, 2).astype(np.float32))
-        Y = tf.constant(np.expand_dims(Y, 2).astype(np.float32))
 
         gauss_1 = self._get_gaussian(
-            X, Y, 
+            self.X, self.Y, 
             self.a1, self.s1,
             self.x, self.y,
             )
         gauss_2 = self._get_gaussian(
-            X, Y, 
+            self.X, self.Y, 
             self.a2, self.s1 + self.s2, 
             self.x, self.y,
             )
@@ -53,6 +48,13 @@ class DiffOfGaussians(tf.keras.layers.Layer):
         _, height, width, _ = input_shape 
         self.width = width
         self.height = height
+
+        W = np.array(range(self.width))
+        H = np.array(range(self.height))
+
+        X, Y = np.meshgrid(W, H)
+        self.X = tf.constant(np.expand_dims(X, 2).astype(np.float32))
+        self.Y = tf.constant(np.expand_dims(Y, 2).astype(np.float32))
 
         self.a1 = self._add_DoG_param("a1", tf.keras.backend.epsilon(), 10.0, False)
         self.a2 = self._add_DoG_param("a2", tf.keras.backend.epsilon(), 10.0, False)
