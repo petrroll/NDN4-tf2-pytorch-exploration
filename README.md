@@ -1,7 +1,7 @@
 # NDN4-tf2-pytorch-exploration
-Exploration into replacing/reimplementing tools provided by [NeuroTheoryUMD/NDN3](https://github.com/NeuroTheoryUMD/NDN3) with/in TF2 and/or PyTorch.
+Exploration into replacing/reimplementing tools provided by [NeuroTheoryUMD/NDN3](https://github.com/NeuroTheoryUMD/NDN3) with/in TF2 and/or PyTorch. Starting to contain reimplementation of bunch of [msc-neuro](https://github.com/petrroll/msc-neuro/) models.
 
-So far only a personal playground without _any_ goals.
+So far only a personal playground without _any_ goals. 
 
 ## Ideas to explore (no particular order): 
 - [x] Laplacian2D regularization
