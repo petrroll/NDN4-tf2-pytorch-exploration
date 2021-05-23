@@ -7,6 +7,9 @@ import tensorflow_addons as tfa
 import numpy as np
 
 #%%
+tf.random.set_seed(42)
+
+#%%
 input_data = np.load("./Data/region1/training_inputs.npy").astype(np.float32)
 output_data = np.load("./Data/region1/training_set.npy").astype(np.float32)
 

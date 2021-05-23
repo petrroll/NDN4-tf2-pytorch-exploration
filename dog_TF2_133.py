@@ -7,6 +7,9 @@ import tensorflow_addons as tfa
 import numpy as np
 
 #%%
+tf.random.set_seed(42)
+
+#%%
 input_data = np.load("./Data/region1/training_inputs.npy").astype(np.float32)
 output_data = np.load("./Data/region1/training_set.npy").astype(np.float32)
 
@@ -69,7 +72,10 @@ model.fit(
     x=input_data, y=output_data,
     batch_size=16,
     epochs=5000,
-    callbacks=[tf.keras.callbacks.TensorBoard(log_dir=f"./Logdir/{exp_str}/{time_str}/")],
+    callbacks=[tf.keras.callbacks.TensorBoard(
+        log_dir=f"./Logdir/{exp_str}/{time_str}/",
+        profile_batch='500,550')
+        ],
     validation_data=(input_val_data, output_val_data),
     validation_freq = 100,
     verbose=0)
