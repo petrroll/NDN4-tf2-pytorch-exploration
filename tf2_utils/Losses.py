@@ -9,6 +9,7 @@ class ScaledPoisson(tf.keras.losses.Loss):
     def __init__(self, output_dim_weights):
         self.output_dim_weights = output_dim_weights
         self.reduction = tf.keras.losses.Reduction.AUTO
+        self.name = "scaled_poisson"
 
     def __call__(self, y_true, y_pred, sample_weight=None):
         assert sample_weight is None
